@@ -2,19 +2,6 @@ from termcolor import colored
 import sys
 import time
 
-"""
-sample = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-]
-"""
 
 sample = [
     [0, 6, 5, 1, 0, 0, 0, 2, 0],
@@ -33,12 +20,13 @@ def print_puzzle(puzzle, guess, row, col):
     for r in range(9):
         for c in range(9):
             if row == r and col == c:
-                print(colored(f"{guess}", "green"), end="\r")
+                print(colored(f"{guess}", "green"), end="  ")
             else:
                 print(puzzle[r][c], end="  ")
-        print()
 
-    time.sleep(5)
+        print()
+    print()
+    # time.sleep(5)
 
 
 def find_next_empty(puzzle):
@@ -94,6 +82,21 @@ def solver(puzzle):
     return False
 
 
-speed = 10 ** (-2)
-# solver(sample)
-print(sample)
+if __name__ == "__main__":
+    speed = int(input("choose speed: (1-5)"))
+    speed = 10 ** (-speed)
+    new_sample = input("do you want to change the sample?(y/N)")
+
+    if new_sample.lower() == "y":
+        print("Enter your sample like below: (separate it with comma) ")
+        for i in range(9):
+            for j in range(9):
+                print(sample[i][j], end=" ")
+            print()
+        print()
+        print("Enter sample: \n")
+        sample = []
+        for i in range(9):
+            sample.append([int(x) for x in input().split()])
+    result = solver(sample)
+    print("Impossible to solve this puzzle!" if not result else "Done")
